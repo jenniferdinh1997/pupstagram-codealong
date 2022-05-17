@@ -5,9 +5,15 @@ const BASE_URL = '/api/users/';
 function signup(user) {
   return fetch(BASE_URL + 'signup', {
     method: 'POST',
-    headers: new Headers({'Content-Type': 'application/json'}),  // If you are sending a file/photo over
+    // If you are sending a file/photo over
     // what do datatype do you need to change this too?
-    body: JSON.stringify(user)
+
+    //multipart form data request <- in our headers tells server there are multiple parts of this request
+
+    //browser will detect that it is a multipart form/data request
+    //have to make sure object in the body is formData not JSON
+
+    body: user // user will be the contents of our form in formData format
   })
   .then(res => {
     if (res.ok) return res.json();

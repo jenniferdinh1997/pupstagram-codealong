@@ -23,7 +23,7 @@ app.use(require('./config/auth'));
 app.use('/api/users', require('./routes/api/users'));
 // "catch all" route
 app.get('/*', function(req, res) {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  res.sendFile(path.join(__dirname, 'build', 'index.html')); //this is where our production app is going to server the client (final react code)
 });
 
 const port = process.env.PORT || 3001;
