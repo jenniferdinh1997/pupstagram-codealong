@@ -8,7 +8,8 @@ const s3 = new S3(); // initialize the S3 constructor
 
 module.exports = {
   signup,
-  login
+  login,
+  profile
 };
 
 async function signup(req, res) { //transport token string to the client within an object
@@ -47,6 +48,23 @@ async function login(req, res) {
     });
   } catch (err) {
     return res.status(401).json(err);
+  }
+}
+
+async function profile(req, res){
+  try {
+    // First find the user using the params from the request
+    // findOne finds first match, its useful to have unique usernames!
+    const user = await User.findOne({username: req.params.username})
+    // Then find all the posts that belong to that user
+    if(!user) return res.status(404).json({err: 'User not found'})
+
+    const posts = await Post.find({user: user._id}).populate("user").exec();
+    console.log(posts, ' this posts')
+    res.status(200).json({posts: posts, user: user})
+  } catch(err){
+    console.log(err)
+    res.status(400).json({err})
   }
 }
 
