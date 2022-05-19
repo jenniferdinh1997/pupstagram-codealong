@@ -1,22 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PageHeader from '../../components/Header/Header';
 import AddPostForm from '../../components/AddPostForm/AddPostForm';
 import PostFeed from '../../components/PostFeed/PostFeed'; 
-import * as postsAPI from '../../utils/postApi';
+import * as postsApi from '../../utils/postApi';
+import { Grid } from "semantic-ui-react";
 
 export default function Feed({ user, handleLogout }){  
     const [posts, setPosts] = useState([])
 
     async function handleAddPost (post) {
-        const data = await postsAPI.create(post);
-        console.log(data)
-        setPosts(posts => [data.post, ...posts])
+      console.log(post)
+      const data = await postsApi.create(post);
+      console.log(data.post, 'This is new pup', data, ' data variable')
+      setPosts(posts => [data.post, ...posts])
     }
 
-    async function getPosts(){
-
+    async function getPosts() {
         try {
-          const data = await postsAPI.getAll();
+          const data = await postsApi.getAll();
           setPosts([...data.posts])
         } catch(err){
           console.log(err, ' this is the error')

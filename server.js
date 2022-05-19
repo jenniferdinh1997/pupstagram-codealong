@@ -13,7 +13,7 @@ const app = express();
 // add in when the app is ready to be deployed
 // app.use(favicon(path.join(__dirname, 'build', 'favicon.ico')));
 app.use(logger('dev'));
-app.use(express.json());
+app.use(express.json()); //this line configures the server to process json
 app.use(express.static(path.join(__dirname, 'build')));
 // Configure the auth middleware
 // This decodes the jwt token, and assigns
@@ -21,6 +21,8 @@ app.use(express.static(path.join(__dirname, 'build')));
 app.use(require('./config/auth')); 
 // api routes must be before the "catch all" route
 app.use('/api/users', require('./routes/api/users'));
+app.use('/api/posts', require('./routes/api/posts'));
+
 // "catch all" route
 app.get('/*', function(req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html')); //this is where our production app is going to server the client (final react code)
