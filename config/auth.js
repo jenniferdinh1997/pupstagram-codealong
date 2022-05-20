@@ -7,13 +7,13 @@ module.exports = function(req, res, next) {
   if (token) {
     // Remove the 'Bearer ' if it was included in the token header
     token = token.replace('Bearer ', '');
-    // Check if token is valid and not expired
-    jwt.verify(token, SECRET, function(err, decoded) {
+    // Check if token is valid/changed in any way and not expired
+    jwt.verify(token, SECRET, function(err, decoded) { //decoded = contents of the token(object stored in our state)
       if (err) {
         console.log('error in jwt verify')
         res.status(400).json({err})
       } else {
-        // It's a valid token, so add user to req
+        // It's a valid token, so assign its user property to req.user
         req.user = decoded.user;    
         next();
       }

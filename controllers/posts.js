@@ -30,10 +30,9 @@ function create(req, res){
 
 async function index(req, res){
     try {
-        // this populates the user when you find the posts
-        // so you'll have access to the users information 
-        // when you fetch the posts
-        const posts = await Post.find({}).populate('user').exec()
+        // this populates the user when you find the posts so you'll have access to the users information when you fetch the posts
+        const posts = await Post.find({}).populate('user').exec() //'user' is referring to a property on the model schema
+        //populate takes the object id that exists in the model and replaces it with the actual user object
         res.status(200).json({posts})
     } catch(err){
 

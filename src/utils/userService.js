@@ -37,7 +37,7 @@ function logout() {
 function login(creds) {
   return fetch(BASE_URL + 'login', {
     method: 'POST',
-    headers: new Headers({'Content-Type': 'application/json'}),
+    headers: new Headers({'Content-Type': 'application/json'}), //specifying that we're sending over JSON
     body: JSON.stringify(creds)
   })
   .then(res => {
@@ -48,9 +48,11 @@ function login(creds) {
   .then(({token}) => tokenService.setToken(token));
 }
 
-export default {
+const userService = {
   signup, 
   getUser,
   logout,
   login
 };
+
+export default userService;
