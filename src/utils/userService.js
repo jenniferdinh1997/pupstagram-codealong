@@ -48,11 +48,24 @@ function login(creds) {
   .then(({token}) => tokenService.setToken(token));
 }
 
+function getProfile(username){
+  return fetch(BASE_URL + username, {
+    headers: {
+      'Authorization': 'Bearer ' + tokenService.getToken()
+    }
+  })
+  .then(res => {
+    if(res.ok) return res.json();
+    throw new Error('Bad Credentials!')
+  })
+}
+
 const userService = {
   signup, 
   getUser,
   logout,
-  login
+  login,
+  getProfile
 };
 
 export default userService;
